@@ -14,6 +14,10 @@ def create_app():
     jwt.init_app(app)
     mail.init_app(app)
     Migrate(app, db)
+    
+     # Inicializar Flask-Admin
+    from app.admin import init_admin
+    init_admin(app)
 
     @app.route("/")
     def home():
