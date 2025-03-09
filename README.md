@@ -1,67 +1,64 @@
 backend-test-01 API
-Esta API fue desarrollada utilizando Flask y varias extensiones para manejar autenticación, base de datos, migraciones y más. La API utiliza PostgreSQL como base de datos, la cual se levanta mediante Docker, y permite gestionar usuarios, confirmación de email, recuperación de contraseña, perfiles, mensajes públicos y chat.
+This API was developed using Flask and various extensions to handle authentication, database management, migrations, and more. It uses PostgreSQL as the database, which is run in a Docker container, and it supports user management, email confirmation, password recovery, user profiles, public messages, and chat functionality. Additionally, a Flask‑Admin panel is available to manage and inspect the data.
 
-Tecnologías Utilizadas
-Flask: Framework web para Python.
-Flask-SQLAlchemy: ORM para interactuar con la base de datos.
-Flask-Migrate: Manejo de migraciones de base de datos.
-Flask-JWT-Extended: Autenticación basada en JSON Web Tokens (JWT).
-Flask-Bcrypt: Para el hash de contraseñas.
-Flask-Mail: (Opcional) Envío de correos electrónicos.
-Flask-RESTful: Para construir endpoints RESTful.
-Flask-Admin: Panel de administración para la API.
-python-dotenv: Carga variables de entorno desde un archivo .env.
-psycopg2-binary: Driver para conectar con PostgreSQL.
-itsdangerous: Generación y verificación de tokens de seguridad.
-Clonar el Proyecto desde GitHub
-Para clonar el repositorio, ejecuta en la terminal:
+Technologies Used
 
-bash
-Copiar
-git clone https://github.com/tu_usuario/backend-test-01.git
+Flask: Python web framework.
+Flask-SQLAlchemy: ORM for database interactions.
+Flask-Migrate: Database migration management.
+Flask-JWT-Extended: JWT-based authentication.
+Flask-Bcrypt: Password hashing.
+Flask-Mail: (Optional) Email sending.
+Flask-RESTful: Build RESTful API endpoints.
+Flask-Admin: Administration panel for the API.
+python-dotenv: Loads environment variables from a .env file.
+psycopg2-binary: PostgreSQL database adapter.
+itsdangerous: Token generation and verification.
+
+
+Cloning the Project from GitHub
+To clone the repository, run the following commands in your terminal:
+bashCopygit clone https://github.com/your_username/backend-test-01.git
 cd backend-test-01
-(Reemplaza tu_usuario por tu nombre de usuario en GitHub y la URL por la de tu repositorio.)
+(Replace your_username with your GitHub username and update the URL as needed.)
+Installation
 
-Instalación de Dependencias
-Crea y activa un entorno virtual:
-
-En Windows (usando Bash):
-
-bash
-Copiar
-python -m venv venv
+Create and activate a virtual environment:
+For Windows (using Bash):
+bashCopypython -m venv venv
 source venv/Scripts/activate
-Instala las dependencias usando pip:
 
-bash
-Copiar
-pip install -r requirements.txt
-Configuración de la Base de Datos con Docker
-La API utiliza una base de datos PostgreSQL que se levanta mediante Docker. Si no tienes la base de datos corriendo, puedes utilizar el siguiente comando:
+Install the dependencies:
+bashCopypip install -r requirements.txt
 
-bash
-Copiar
-docker run --name postgres_backend_test_01 -e POSTGRES_USER=osidev -e POSTGRES_PASSWORD=osidev25 -e POSTGRES_DB=backend_test_01_db -p 5433:5432 -d postgres:16
-Este comando levanta un contenedor PostgreSQL en el puerto 5433 de tu máquina.
-Asegúrate de que la variable DATABASE_URL en el archivo .env esté configurada correctamente:
-bash
-Copiar
-DATABASE_URL=postgresql://osidev:osidev25@localhost:5433/backend_test_01_db
-Si necesitas reiniciar o eliminar el contenedor, puedes utilizar:
 
-bash
-Copiar
-docker rm -f postgres_backend_test_01
-o, si usas docker-compose, configura el archivo docker-compose.yml y usa:
+Configuring the Database with Docker
+The API uses a PostgreSQL database running in a Docker container. If the database is not running, you can start a new container using the command below:
+bashCopydocker run --name postgres_backend_test_01 -e POSTGRES_USER=osiapp -e POSTGRES_PASSWORD=osiapp25 -e POSTGRES_DB=backend_test_01_db -p 5433:5432 -d postgres:16
 
-bash
-Copiar
-docker-compose down -v
+This command starts a PostgreSQL container on port 5433 of your machine.
+Ensure that your .env file has the following (or similar) configuration:
+
+dotenvCopyDATABASE_URL=postgresql://osiapp:osiapp25@localhost:5433/backend_test_01_db
+To restart or remove the container, use:
+bashCopydocker rm -f postgres_backend_test_01
+or, if using docker-compose:
+bashCopydocker-compose down -v
 docker-compose up -d
-Levantar el Servidor
-Con la base de datos corriendo y las dependencias instaladas, levanta la API ejecutando:
+Running the Server
 
-bash
-Copiar
-python run.py
-La aplicación se iniciará en modo desarrollo (debug=True) y podrás acceder a ella en http://127.0.0.1:5000/.
+Database Migrations (First Migration and Future Migrations):
+Make sure the FLASK_APP variable is set:
+bashCopyexport FLASK_APP=run.py
+Then, if this is the first time:
+bashCopyflask db init
+flask db migrate -m "Initial migration: create users table"
+flask db upgrade
+
+Start the Application:
+bashCopypython run.py
+The application will run in development mode (debug=True) and can be accessed at http://127.0.0.1:5000/.
+
+Flask-Admin Panel
+The API includes a Flask‑Admin panel to manage and inspect your data. Once the application is running, you can access the admin panel by navigating to:
+http://127.0.0.1:5000/admin
