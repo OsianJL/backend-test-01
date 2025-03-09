@@ -3,14 +3,14 @@ version: '3.8'
 services:
   db:
     image: postgres:16
-    container_name: postgres_backend_test_02
+    container_name: postgres_backend_test_01
     restart: always
     environment:
       POSTGRES_USER: osiapp
       POSTGRES_PASSWORD: osiapp25
-      POSTGRES_DB: backend_db_02
+      POSTGRES_DB: backend_db_01
     ports:
-      - "5434:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
